@@ -1,41 +1,15 @@
 const gulp = require('gulp');
 const fs = require('fs');
 const { closeSync, openSync } = require('fs');
-const path = require('path');
-const template = require('gulp-template');
 const yargs = require('yargs');
 const exec = require('child_process').exec;
 
 const touch = filename => closeSync(openSync(filename, 'w'));
-const data = new Uint8Array(Buffer.from('Hello Node.js'));
-
-const root = '';
-
-const resolveToComponents = (glob = '') => {
-	return path.join(root, '', glob);
-};
-
-gulp.task('component', () => {
-	const cap = val => {
-		return val.charAt(0).toUpperCase() + val.slice(1);
-	};
-	const name = yargs.argv.name;
-	const parentPath = yargs.argv.parent || '';
-	const destPath = path.join(resolveToComponents(), parentPath, name);
-	console.log('\nChange index.ts file located in src/screens!!!\n');
-	return gulp
-		.src(path.join(__dirname, 'generator', 'component/**/*.**'))
-		.pipe(
-			template({
-				name: name,
-				upCaseName: cap(name)
-			})
-		)
-		.pipe(gulp.dest(destPath));
-});
 
 gulp.task('create', async function() {
-	const name = 'react-native init ' + yargs.argv.name;
+	const name = yargs.argv.vers
+		? 'react-native init --version ' + yargs.argv.vers + ' ' + yargs.argv.name
+		: 'react-native init ' + yargs.argv.name;
 	const path = yargs.argv.name;
 	exec(name, async function() {
 		process.chdir(path);
@@ -66,7 +40,7 @@ gulp.task('create', async function() {
 							if (!fs.existsSync(dir)) {
 								fs.mkdirSync(dir);
 								if (dir === 'src') {
-									fs.writeFileSync(`${dir}/App.tsx`, data);
+									fs.writeFileSync(`${dir}/App.tsx`, '');
 								} else {
 									fs.writeFileSync(`${dir}/index.ts`, '');
 								}
