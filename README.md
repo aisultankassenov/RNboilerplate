@@ -26,8 +26,13 @@ $ yarn install
 
 ### Usage
 
+Without any specifications
 ```
 $ gulp create --name name-of-a-project
+```
+With particular react-native verion. Example:
+```
+$ gulp create --vers 0.56.0 --name name-of-a-project
 ```
 This will create a project inside the folder. Project will contain TypeScript and folder 'src' which will contain following folders with index.ts inside: api, augmentations, components, hocs, router, screens, stores, types, typings, utils.
 
